@@ -1,7 +1,9 @@
 package io.github.rahulrvp.android_utils;
 
 import android.telephony.PhoneNumberUtils;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -15,6 +17,8 @@ import android.widget.EditText;
 
 
 public class ValidationUtils {
+
+    private static final String LOG_TAG = "Validation Utils";
 
     /**
      * Checks if the email is valid.
@@ -63,7 +67,7 @@ public class ValidationUtils {
     }
 
     /**
-     * This method helps to remove all the whitespaces and hyphens added in the phone number
+     * This method helps to remove all the invalid characters added in the phone number
      * field once the edit text loses it's focus.
      * <p>
      * Note: This action will be overridden if the developer adds another focus change listener
@@ -73,13 +77,18 @@ public class ValidationUtils {
      */
     public static void addPhoneNumberValidator(final EditText editText) {
         if (editText != null) {
+            if (editText.getInputType() != InputType.TYPE_CLASS_PHONE) {
+                String idString = editText.getResources().getResourceEntryName(editText.getId());
+                Log.w(LOG_TAG, "The 'inputType' must be set to 'phone' for this EditText : @id/" + idString);
+            }
+
             editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus) {
                         String phoneNumber = EditTextUtils.getText(editText);
                         if (phoneNumber != null) {
-                            phoneNumber = phoneNumber.replaceAll("[ -]", "");
+                            phoneNumber = phoneNumber.replaceAll("[ -().*#,;N]", "");
                             EditTextUtils.setText(editText, phoneNumber);
                         }
                     }
