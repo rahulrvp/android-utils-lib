@@ -10,8 +10,16 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="io.github.rahulrvp.androidutilslib.MainActivity">
 
-    <TextView
+    <EditText
+        android:id="@+id/edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_below="@id/edit_text"
+        android:onClick="onTestClicked"
+        android:text="@string/test_code" />
+
 </RelativeLayout>
