@@ -10,10 +10,19 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="io.github.rahulrvp.androidutilslib.MainActivity">
 
+    <TextView
+        android:id="@+id/sample_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sample TextView"
+        android:textSize="18sp"
+        android:textStyle="italic" />
+
     <EditText
         android:id="@+id/edit_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sample_textview" />
 
     <Button
         android:layout_width="wrap_content"

@@ -78,8 +78,12 @@ public class ValidationUtils {
     public static void addPhoneNumberValidator(final EditText editText) {
         if (editText != null) {
             if (editText.getInputType() != InputType.TYPE_CLASS_PHONE) {
-                String idString = editText.getResources().getResourceEntryName(editText.getId());
-                Log.w(LOG_TAG, "The 'inputType' must be set to 'phone' for this EditText : @id/" + idString);
+                try {
+                    String idString = editText.getResources().getResourceEntryName(editText.getId());
+                    Log.w(LOG_TAG, "The 'inputType' must be set to 'phone' for this EditText : @id/" + idString);
+                } catch (Exception ignore) {
+                    // do nothing.
+                }
             }
 
             editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
