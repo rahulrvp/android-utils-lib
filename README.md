@@ -6,6 +6,6 @@ This library wraps the commonly used andoid methods.
 
 ```java
 dependencies {
-    compile 'io.github.rahulrvp:android-utils:0.0.1'
+    compile 'com.github.rahulrvp:android-utils:0.0.2'
 }
 ```
