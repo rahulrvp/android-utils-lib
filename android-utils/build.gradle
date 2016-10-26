@@ -1,10 +1,10 @@
 apply plugin: 'com.android.library'
 
 ext {
-    bintrayRepo = 'maven'
+    bintrayRepo = 'android'
     bintrayName = 'android-utils'
 
-    publishedGroupId = 'io.github.rahulrvp'
+    publishedGroupId = 'com.github.rahulrvp'
     libraryName = 'Android Utils'
     artifact = 'android-utils'
 
