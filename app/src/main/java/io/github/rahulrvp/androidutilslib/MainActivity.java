@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         Log.wtf("LOG", text);
         TextViewUtils.setError(textView, "New text!");
 
+        new RobotoRegular().apply(textView);
+
         mEditText = (EditText) findViewById(R.id.edit_text);
         ValidationUtils.addPhoneNumberValidator(mEditText);
     }
