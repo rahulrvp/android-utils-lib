@@ -6,7 +6,7 @@ A collection of utility classes to help reduce the code duplication and give acc
 
 ```java
 dependencies {
-    compile 'com.github.rahulrvp:android-utils:0.0.2'
+    compile 'com.github.rahulrvp:android-utils:0.0.4'
 }
 ```
 
