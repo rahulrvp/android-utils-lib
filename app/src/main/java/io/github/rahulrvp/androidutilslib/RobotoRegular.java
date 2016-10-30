@@ -1,6 +1,6 @@
 package io.github.rahulrvp.androidutilslib;
 
-import io.github.rahulrvp.android_utils.BaseFont;
+import com.github.rahulrvp.android_utils.BaseFont;
 
 /**
  * @author Rahul Raveendran V P
