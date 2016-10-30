@@ -16,7 +16,7 @@
  *
  */
 
-package io.github.rahulrvp.android_utils;
+package com.github.rahulrvp.android_utils;
 
 import android.telephony.PhoneNumberUtils;
 import android.text.InputType;

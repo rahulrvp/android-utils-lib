@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.rahulrvp.android_utils;
+package com.github.rahulrvp.android_utils;
 
 import android.content.Context;
 import android.content.res.AssetManager;

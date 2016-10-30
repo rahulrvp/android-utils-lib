@@ -7,9 +7,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import io.github.rahulrvp.android_utils.EditTextUtils;
-import io.github.rahulrvp.android_utils.TextViewUtils;
-import io.github.rahulrvp.android_utils.ValidationUtils;
+import com.github.rahulrvp.android_utils.EditTextUtils;
+import com.github.rahulrvp.android_utils.TextViewUtils;
+import com.github.rahulrvp.android_utils.ValidationUtils;
 
 public class MainActivity extends AppCompatActivity {
 
