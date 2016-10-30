@@ -6,16 +6,13 @@ A collection of utility classes to help reduce the code duplication and give acc
 
 ```java
 dependencies {
-    compile 'com.github.rahulrvp:android-utils:0.0.4'
+    compile 'com.github.rahulrvp:android-utils:0.1.0'
 }
 ```
 
 ## Docs
 
-Javadocs are available in the following sites.
-
-- https://rahulrvp.github.io/android-utils-lib/
-- http://www.javadoc.io/doc/com.github.rahulrvp/android-utils
+For Javadocs visit: http://www.javadoc.io/doc/com.github.rahulrvp/android-utils
 
 ## Contributions
 
