@@ -28,6 +28,13 @@ import android.widget.TextView;
 import java.io.File;
 
 /**
+ * Base class to load and apply font on TextView children easily.
+ * <p>
+ * Usage: Inherit this class and implement the getPath() method to supply font file's location.
+ * By default the class will try to fetch font from /assets folder. If the user want to load font
+ * from local file, he can override the getType() method and return BaseFont.TYPE_FILE to load font
+ * from file.
+ *
  * @author Rahul Raveendran V P
  *         Created on 26/10/16 @ 1:48 PM
  *         https://github.com/rahulrvp
@@ -44,6 +51,23 @@ public abstract class BaseFont {
     protected BaseFont() {
     }
 
+    /**
+     * Applies font on the supplied {@link TextView}
+     *
+     * @param textView {@link TextView} to set font.
+     */
+    public void apply(TextView textView) {
+        if (textView != null) {
+            apply(textView, null);
+        }
+    }
+
+    /**
+     * Applies font on the supplied {@link TextView} with given style.
+     *
+     * @param textView {@link TextView} to set font.
+     * @param style    Style of the font. For supported values see {@link Typeface}
+     */
     public void apply(TextView textView, Integer style) {
         if (textView != null && textView.getContext() != null) {
             Typeface typeface = getFont(textView.getContext());
@@ -57,18 +81,23 @@ public abstract class BaseFont {
         }
     }
 
-    public void apply(TextView textView) {
-        if (textView != null) {
-            apply(textView, null);
-        }
-    }
-
+    /**
+     * Applies font on the view and it's children (If they are TextView's children)
+     *
+     * @param view TextView instance or instance of ViewGroup that contains TextView children
+     */
     public void apply(View view) {
         if (view != null) {
             apply(view, null);
         }
     }
 
+    /**
+     * Applies font on the view and it's children (If they are TextView's children) with given style.
+     *
+     * @param view  TextView instance or instance of ViewGroup that contains TextView children
+     * @param style Style of the font. For supported values see {@link Typeface}
+     */
     public void apply(View view, Integer style) {
         if (view != null) {
             if (view instanceof ViewGroup) {
