@@ -16,7 +16,7 @@
  *
  */
 
-package com.github.rahulrvp.android_utils.view;
+package com.github.rahulrvp.android_utils;
 
 import android.content.Context;
 import android.util.Log;

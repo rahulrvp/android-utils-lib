@@ -25,8 +25,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import com.github.rahulrvp.android_utils.view.EditTextUtils;
-
 /**
  * Wraps commonly used form validation methods.
  *
