@@ -88,10 +88,20 @@ public class DateTimeUtils {
     public static String getDiffString(Calendar now, Calendar then, int fieldInt, String fieldString) {
         String result = "";
 
-        int diff = now.get(fieldInt) - then.get(fieldInt);
+        int diff = getDiffInt(now, then, fieldInt);
 
         if (diff > 0) {
             result = result + diff + " " + ((diff == 1) ? fieldString : fieldString + "s");
+        }
+
+        return result;
+    }
+
+    public static int getDiffInt(Calendar now, Calendar then, int fieldInt) {
+        int result = 0;
+
+        if (now != null && then != null) {
+            result = now.get(fieldInt) - then.get(fieldInt);
         }
 
         return result;
