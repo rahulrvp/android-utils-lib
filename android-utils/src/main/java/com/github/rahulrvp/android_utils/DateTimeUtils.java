@@ -3,7 +3,9 @@ package com.github.rahulrvp.android_utils;
 import android.text.TextUtils;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * @author Rahul Raveendran V P
@@ -102,6 +104,79 @@ public class DateTimeUtils {
 
         if (now != null && then != null) {
             result = now.get(fieldInt) - then.get(fieldInt);
+        }
+
+        return result;
+    }
+
+    public static String getLastActivityTimeString(long millisToCompare, String dateFormat, boolean shouldShowToday) {
+        String result = null;
+
+        Calendar today = Calendar.getInstance();
+
+        Calendar thatDay = Calendar.getInstance();
+        thatDay.setTimeInMillis(millisToCompare);
+
+        if (getDiffInt(today, thatDay, Calendar.YEAR) == 0 && getDiffInt(today, thatDay, Calendar.MONTH) == 0) {
+            int dayDiff = getDiffInt(today, thatDay, Calendar.DAY_OF_YEAR);
+
+            // check if it is today
+            if (dayDiff == 0) {
+                if (shouldShowToday) {
+                    result = "Today";
+                } else {
+                    int hours = getDiffInt(today, thatDay, Calendar.HOUR_OF_DAY);
+                    if (hours < 24 && hours > 0) {
+                        if (hours == 1) {
+                            result = "An hour ago";
+                        } else {
+                            result = (hours + " hours ago");
+                        }
+                    } else {
+                        int minutes = getDiffInt(today, thatDay, Calendar.MINUTE);
+                        if (minutes < 60) {
+                            if (minutes == 0) {
+                                result = "Just Now";
+                            } else {
+                                result = (minutes + " minutes ago");
+                            }
+                        }
+                    }
+                }
+            } else if (dayDiff == 1) {
+                // normal yesterday
+                result = "Yesterday";
+            }
+        } else if (getDiffInt(today, thatDay, Calendar.YEAR) == 1) {
+            // new year's yesterday
+            int thisMonth = today.get(Calendar.MONTH);
+            int thisDate = today.get(Calendar.DAY_OF_MONTH);
+            int thatMonth = thatDay.get(Calendar.MONTH);
+            int thatDate = thatDay.get(Calendar.DAY_OF_MONTH);
+
+            if (thisMonth == Calendar.JANUARY
+                    && thatMonth == Calendar.DECEMBER
+                    && thisDate == 1
+                    && thatDate == 31) {
+
+                result = "Yesterday";
+            }
+        } else {
+            SimpleDateFormat sdf = null;
+
+            if (!TextUtils.isEmpty(dateFormat)) {
+                try {
+                    sdf = new SimpleDateFormat(dateFormat, Locale.getDefault());
+                } catch (Exception e) {
+                    Log.e(LOG_TAG, e.getMessage());
+                }
+            }
+
+            if (sdf == null) {
+                sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault());
+            }
+
+            result = sdf.format(millisToCompare);
         }
 
         return result;

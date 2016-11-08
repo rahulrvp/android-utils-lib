@@ -12,6 +12,8 @@ import com.github.rahulrvp.android_utils.EditTextUtils;
 import com.github.rahulrvp.android_utils.TextViewUtils;
 import com.github.rahulrvp.android_utils.ValidationUtils;
 
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity {
 
     private EditText mEditText;
@@ -30,7 +32,15 @@ public class MainActivity extends AppCompatActivity {
         mEditText = (EditText) findViewById(R.id.edit_text);
         ValidationUtils.addPhoneNumberValidator(mEditText);
 
-        Log.d("LOG", DateTimeUtils.getTimeAgoString(624652200000L));
+        Calendar now = Calendar.getInstance();
+        now.set(2012, 0, 1);
+
+        Calendar yesterday = Calendar.getInstance();
+        yesterday.set(2016, 10, 8);
+        yesterday.set(Calendar.HOUR_OF_DAY, 10);
+        yesterday.set(Calendar.MINUTE, 0);
+
+        Log.d("LOG", DateTimeUtils.getLastActivityTimeString(yesterday.getTimeInMillis(), null, false));
     }
 
     public void onTestClicked(View view) {
