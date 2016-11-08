@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         yesterday.set(Calendar.HOUR_OF_DAY, 10);
         yesterday.set(Calendar.MINUTE, 0);
 
-        Log.d("LOG", DateTimeUtils.getLastActivityTimeString(yesterday.getTimeInMillis(), null, false));
+        Log.d("LOG", DateTimeUtils.getTimeAgoString(yesterday.getTimeInMillis(), null, false));
     }
 
     public void onTestClicked(View view) {

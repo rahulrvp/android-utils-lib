@@ -18,6 +18,57 @@ public class DateTimeUtils {
 
     private static final String LOG_TAG = "DateTimeUtils";
 
+    /**
+     * Provides the difference of 2 calendar objects at specified field, appended with the text given.
+     * Ex: if fieldName is Calendar.DAY & fieldString is "Day" and the date difference is 2, then the
+     * result of this method would look like this, "2 Days"
+     *
+     * @param now         Recent Calendar object
+     * @param then        Old Calendar object
+     * @param fieldInt    Field to compare
+     * @param fieldString String to append at the end of diff.
+     * @return String with difference appended with fieldString(s)
+     */
+    public static String getDiffString(Calendar now, Calendar then, int fieldInt, String fieldString) {
+        String result = "";
+
+        int diff = getDiffInt(now, then, fieldInt);
+
+        if (diff > 0) {
+            result = result + diff + " " + ((diff == 1) ? fieldString : fieldString + "s");
+        }
+
+        return result;
+    }
+
+    /**
+     * Compares 2 calendar objects at a given field. Returns the integer value of the difference.
+     *
+     * @param now      Recent Calendar object
+     * @param then     Old Calendar object
+     * @param fieldInt Field to compare
+     * @return returns the difference between now n then at given field. 0 by default.
+     */
+    public static int getDiffInt(Calendar now, Calendar then, int fieldInt) {
+        int result = 0;
+
+        if (now != null && then != null) {
+            result = now.get(fieldInt) - then.get(fieldInt);
+        }
+
+        return result;
+    }
+
+    /**
+     * Compares the current time with passed in time in millis and constructs a string with time
+     * difference. The result would look like this,
+     * <p>
+     * a Years, b Months, c Weeks, d Days, e Hours, f Minutes, g Seconds ago
+     *
+     * @param millis the datetime to compare with current datetime
+     * @return TimeAgoString that would looks like,
+     * a Years, b Months, c Weeks, d Days, e Hours, f Minutes, g Seconds ago
+     */
     public static String getTimeAgoString(long millis) {
         String result = "";
 
@@ -87,29 +138,28 @@ public class DateTimeUtils {
         return result;
     }
 
-    public static String getDiffString(Calendar now, Calendar then, int fieldInt, String fieldString) {
-        String result = "";
-
-        int diff = getDiffInt(now, then, fieldInt);
-
-        if (diff > 0) {
-            result = result + diff + " " + ((diff == 1) ? fieldString : fieldString + "s");
-        }
-
-        return result;
-    }
-
-    public static int getDiffInt(Calendar now, Calendar then, int fieldInt) {
-        int result = 0;
-
-        if (now != null && then != null) {
-            result = now.get(fieldInt) - then.get(fieldInt);
-        }
-
-        return result;
-    }
-
-    public static String getLastActivityTimeString(long millisToCompare, String dateFormat, boolean shouldShowToday) {
+    /**
+     * Provides time ago string based on the date difference.
+     * <p>
+     * If both timestamp lies in same date, we provide the ago string value in either time or as just "Today"
+     * If the date difference is 1, we provide "Yesterday" (Year diff is also taken care of)
+     * For all other cases the given timestamp is formatted using the given dateFormat string.
+     * If dateFormat is empty or null we will use the format as dd/MM/yyyy hh:mm aa
+     * <p>
+     * Example outputs:
+     * 10 minutes ago
+     * An hour ago
+     * 2 hours ago
+     * Today
+     * Yesterday
+     * 18/10/2015
+     *
+     * @param millisToCompare timestamp (in millis) to compare
+     * @param dateFormat      date-format string for formatting old date.
+     * @param shouldShowToday flag to choose between text "Today" or time diff strings.(Ex: 10 minutes ago)
+     * @return formatted string tells the difference between given timestamp and current timestamp
+     */
+    public static String getTimeAgoString(long millisToCompare, String dateFormat, boolean shouldShowToday) {
         String result = null;
 
         Calendar today = Calendar.getInstance();
