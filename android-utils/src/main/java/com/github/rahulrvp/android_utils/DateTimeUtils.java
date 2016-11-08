@@ -20,7 +20,7 @@ public class DateTimeUtils {
 
     /**
      * Provides the difference of 2 calendar objects at specified field, appended with the text given.
-     * Ex: if fieldName is Calendar.DAY & fieldString is "Day" and the date difference is 2, then the
+     * Ex: if fieldName is Calendar.DAY and fieldString is "Day" and the date difference is 2, then the
      * result of this method would look like this, "2 Days"
      *
      * @param now         Recent Calendar object
