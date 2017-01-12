@@ -8,6 +8,8 @@ import java.util.Calendar;
 import java.util.Locale;
 
 /**
+ * Collection of date and time related util method that we use in day to day programming.
+ *
  * @author Rahul Raveendran V P
  *         Created on 30/10/16 @ 3:34 PM
  *         https://github.com/rahulrvp
@@ -29,6 +31,7 @@ public class DateTimeUtils {
      * @param fieldString String to append at the end of diff.
      * @return String with difference appended with fieldString(s)
      */
+    @SuppressWarnings("WeakerAccess")
     public static String getDiffString(Calendar now, Calendar then, int fieldInt, String fieldString) {
         String result = "";
 
@@ -49,6 +52,7 @@ public class DateTimeUtils {
      * @param fieldInt Field to compare
      * @return returns the difference between now n then at given field. 0 by default.
      */
+    @SuppressWarnings("WeakerAccess")
     public static int getDiffInt(Calendar now, Calendar then, int fieldInt) {
         int result = 0;
 
@@ -196,6 +200,8 @@ public class DateTimeUtils {
             } else if (dayDiff == 1) {
                 // normal yesterday
                 result = "Yesterday";
+            } else {
+                result = formatDate(millisToCompare, dateFormat, Locale.getDefault());
             }
         } else if (getDiffInt(today, thatDay, Calendar.YEAR) == 1) {
             // new year's yesterday
@@ -210,25 +216,36 @@ public class DateTimeUtils {
                     && thatDate == 31) {
 
                 result = "Yesterday";
+            } else {
+                result = formatDate(millisToCompare, dateFormat, Locale.getDefault());
             }
         } else {
-            SimpleDateFormat sdf = null;
-
-            if (!TextUtils.isEmpty(dateFormat)) {
-                try {
-                    sdf = new SimpleDateFormat(dateFormat, Locale.getDefault());
-                } catch (Exception e) {
-                    Log.e(LOG_TAG, e.getMessage());
-                }
-            }
-
-            if (sdf == null) {
-                sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault());
-            }
-
-            result = sdf.format(millisToCompare);
+            result = formatDate(millisToCompare, dateFormat, Locale.getDefault());
         }
 
         return result;
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public static String formatDate(long timeInMillis, String format, Locale locale) {
+        SimpleDateFormat sdf = null;
+
+        if (locale == null) {
+            locale = Locale.getDefault();
+        }
+
+        if (!TextUtils.isEmpty(format)) {
+            try {
+                sdf = new SimpleDateFormat(format, locale);
+            } catch (Exception e) {
+                Log.e(LOG_TAG, e.getMessage());
+            }
+        }
+
+        if (sdf == null) {
+            sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm aa", locale);
+        }
+
+        return sdf.format(timeInMillis);
     }
 }
