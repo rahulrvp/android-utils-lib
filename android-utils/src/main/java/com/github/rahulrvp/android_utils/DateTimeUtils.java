@@ -158,18 +158,46 @@ public class DateTimeUtils {
      * Yesterday
      * 18/10/2015
      *
-     * @param millisToCompare timestamp (in millis) to compare
-     * @param dateFormat      date-format string for formatting old date.
-     * @param shouldShowToday flag to choose between text "Today" or time diff strings.(Ex: 10 minutes ago)
+     * @param oldTimestampMillis old timestamp (in millis) to compare with current timestamp
+     * @param dateFormat         date-format string for formatting old date.
+     * @param shouldShowToday    flag to choose between text "Today" or time diff strings.(Ex: 10 minutes ago)
      * @return formatted string tells the difference between given timestamp and current timestamp
      */
-    public static String getTimeAgoString(long millisToCompare, String dateFormat, boolean shouldShowToday) {
+    public static String getTimeAgoString(long oldTimestampMillis, String dateFormat, boolean shouldShowToday) {
+        return getTimeAgoString(System.currentTimeMillis(), oldTimestampMillis, dateFormat, shouldShowToday);
+    }
+
+    /**
+     * Provides time ago string based on the date difference.
+     * <p>
+     * If both timestamp lies in same date, we provide the ago string value in either time or as just "Today"
+     * If the date difference is 1, we provide "Yesterday" (Year diff is also taken care of)
+     * For all other cases the given timestamp is formatted using the given dateFormat string.
+     * If dateFormat is empty or null we will use the format as dd/MM/yyyy hh:mm aa
+     * <p>
+     * Example outputs:
+     * 10 minutes ago
+     * An hour ago
+     * 2 hours ago
+     * Today
+     * Yesterday
+     * 18/10/2015
+     *
+     * @param newTimestampMillis new timestamp (in millis) to compare
+     * @param oldTimeStampMillis old timestamp (in millis) to compare
+     * @param dateFormat         date-format string for formatting old date.
+     * @param shouldShowToday    flag to choose between text "Today" or time diff strings.(Ex: 10 minutes ago)
+     * @return formatted string tells the difference between given timestamp and current timestamp
+     */
+    @SuppressWarnings("WeakerAccess")
+    public static String getTimeAgoString(long newTimestampMillis, long oldTimeStampMillis, String dateFormat, boolean shouldShowToday) {
         String result = null;
 
         Calendar today = Calendar.getInstance();
+        today.setTimeInMillis(newTimestampMillis);
 
         Calendar thatDay = Calendar.getInstance();
-        thatDay.setTimeInMillis(millisToCompare);
+        thatDay.setTimeInMillis(oldTimeStampMillis);
 
         if (getDiffInt(today, thatDay, Calendar.YEAR) == 0 && getDiffInt(today, thatDay, Calendar.MONTH) == 0) {
             int dayDiff = getDiffInt(today, thatDay, Calendar.DAY_OF_YEAR);
@@ -201,7 +229,7 @@ public class DateTimeUtils {
                 // normal yesterday
                 result = "Yesterday";
             } else {
-                result = formatDate(millisToCompare, dateFormat, Locale.getDefault());
+                result = formatDate(oldTimeStampMillis, dateFormat, Locale.getDefault());
             }
         } else if (getDiffInt(today, thatDay, Calendar.YEAR) == 1) {
             // new year's yesterday
@@ -217,10 +245,10 @@ public class DateTimeUtils {
 
                 result = "Yesterday";
             } else {
-                result = formatDate(millisToCompare, dateFormat, Locale.getDefault());
+                result = formatDate(oldTimeStampMillis, dateFormat, Locale.getDefault());
             }
         } else {
-            result = formatDate(millisToCompare, dateFormat, Locale.getDefault());
+            result = formatDate(oldTimeStampMillis, dateFormat, Locale.getDefault());
         }
 
         return result;
