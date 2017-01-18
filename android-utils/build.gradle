@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/rahulrvp/android-utils/wiki'
     gitUrl = 'https://github.com/rahulrvp/android-utils.git'
 
-    libraryVersion = '0.3.0'
+    libraryVersion = '0.3.1'
 
     developerId = 'rahulrvp'
     developerName = 'Rahul Raveendran'
