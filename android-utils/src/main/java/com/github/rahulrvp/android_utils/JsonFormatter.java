@@ -1,6 +1,7 @@
 package com.github.rahulrvp.android_utils;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,13 +37,23 @@ public class JsonFormatter {
         outputFormat = OutputFormat.String;
     }
 
-    public String format(String text) throws JSONException {
+    public String format(String text) {
         StringBuilder stringBuilder = new StringBuilder();
-        formatJson(stringBuilder, 0, new JSONObject(text), OutputFormat.String);
+
+        try {
+            formatJson(stringBuilder, 0, new JSONObject(text));
+        } catch (Exception e) {
+            try {
+                formatJson(stringBuilder, 0, new JSONArray(text));
+            } catch (Exception err) {
+                Log.e("JsonFormatter", e.getMessage());
+            }
+        }
+
         return stringBuilder.toString();
     }
 
-    public void formatJson(StringBuilder builder, int level, JSONObject jsonObject, OutputFormat outputFormat) throws JSONException {
+    public void formatJson(StringBuilder builder, int level, JSONObject jsonObject) throws JSONException {
         if (jsonObject != null && builder != null) {
             String levelZeroTab = tabs(level);
             String levelOneTab = tabs(level + 1);
@@ -66,7 +77,9 @@ public class JsonFormatter {
                 builder.append(" : ");
 
                 if (value instanceof JSONArray) {
-                    formatJson(builder, level + 1, (JSONArray) value, outputFormat);
+                    formatJson(builder, level + 1, (JSONArray) value);
+                } else if (value instanceof JSONObject) {
+                    formatJson(builder, level + 1, (JSONObject) value);
                 } else {
                     addValueElement(builder, value);
                 }
@@ -84,7 +97,7 @@ public class JsonFormatter {
         }
     }
 
-    public void formatJson(StringBuilder builder, int level, JSONArray jsonArray, OutputFormat outputFormat) throws JSONException {
+    public void formatJson(StringBuilder builder, int level, JSONArray jsonArray) throws JSONException {
         if (jsonArray != null && builder != null) {
             int len = jsonArray.length();
             String levelZeroTab = tabs(level);
@@ -98,7 +111,7 @@ public class JsonFormatter {
 
                 Object element = jsonArray.get(i);
                 if (element instanceof JSONObject) {
-                    formatJson(builder, level + 1, (JSONObject) element, outputFormat);
+                    formatJson(builder, level + 1, (JSONObject) element);
                 } else {
                     builder.append(levelOneTab);
                     addValueElement(builder, element);
