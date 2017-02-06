@@ -1,0 +1,39 @@
+{
+  "name": "Ross Geller",
+  "phone": [
+    "+123456",
+    "+134567",
+    "+156789"
+  ],
+  "address": [
+    {
+      "building_no": 36,
+      "street": "2nd Street, Gandhinagar",
+      "city": "Anna Nagar, Chennai",
+      "pin": "600040",
+      "default": true
+    },
+    {
+      "building_no": 36,
+      "street": "2nd Street, Gandhinagar",
+      "city": "Anna Nagar, Chennai",
+      "pin": "600040",
+      "default": false
+    }
+  ],
+  "occupation": {
+    "designation": "professor",
+    "college": "MIT"
+  },
+  "sample_null": null,
+  "nested_array": [
+    [
+      {
+        "key": "value"
+      },
+      [
+        null
+      ]
+    ]
+  ]
+}
