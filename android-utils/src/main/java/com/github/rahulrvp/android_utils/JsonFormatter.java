@@ -41,10 +41,10 @@ public class JsonFormatter {
         StringBuilder stringBuilder = new StringBuilder();
 
         try {
-            formatJson(stringBuilder, 0, new JSONObject(text));
+            formatJson(stringBuilder, 0, new JSONObject(text), false);
         } catch (Exception e) {
             try {
-                formatJson(stringBuilder, 0, new JSONArray(text));
+                formatJson(stringBuilder, 0, new JSONArray(text), false);
             } catch (Exception err) {
                 Log.e("JsonFormatter", e.getMessage());
             }
@@ -53,13 +53,15 @@ public class JsonFormatter {
         return stringBuilder.toString();
     }
 
-    public void formatJson(StringBuilder builder, int level, JSONObject jsonObject) throws JSONException {
+    public void formatJson(StringBuilder builder, int level, JSONObject jsonObject, boolean isArrayElement) throws JSONException {
         if (jsonObject != null && builder != null) {
             String levelZeroTab = tabs(level);
             String levelOneTab = tabs(level + 1);
             String newLine = getNewlineString();
 
-            builder.append(levelZeroTab);
+            if (isArrayElement) {
+                builder.append(levelZeroTab);
+            }
 
             addNonQuotedElement(builder, "{", colorBraces);
 
@@ -77,9 +79,9 @@ public class JsonFormatter {
                 builder.append(" : ");
 
                 if (value instanceof JSONArray) {
-                    formatJson(builder, level + 1, (JSONArray) value);
+                    formatJson(builder, level + 1, (JSONArray) value, false);
                 } else if (value instanceof JSONObject) {
-                    formatJson(builder, level + 1, (JSONObject) value);
+                    formatJson(builder, level + 1, (JSONObject) value, false);
                 } else {
                     addValueElement(builder, value);
                 }
@@ -97,21 +99,27 @@ public class JsonFormatter {
         }
     }
 
-    public void formatJson(StringBuilder builder, int level, JSONArray jsonArray) throws JSONException {
+    public void formatJson(StringBuilder builder, int level, JSONArray jsonArray, boolean isArrayElement) throws JSONException {
         if (jsonArray != null && builder != null) {
             int len = jsonArray.length();
             String levelZeroTab = tabs(level);
             String levelOneTab = tabs(level + 1);
             String newLine = getNewlineString();
 
-            addNonQuotedElement(builder, " [", colorSqBracket);
+            if (isArrayElement) {
+                builder.append(levelZeroTab);
+            }
+
+            addNonQuotedElement(builder, "[", colorSqBracket);
 
             for (int i = 0; i < len; i++) {
                 builder.append(newLine);
 
                 Object element = jsonArray.get(i);
-                if (element instanceof JSONObject) {
-                    formatJson(builder, level + 1, (JSONObject) element);
+                if (element instanceof JSONArray) {
+                    formatJson(builder, level + 1, (JSONArray) element, true);
+                } else if (element instanceof JSONObject) {
+                    formatJson(builder, level + 1, (JSONObject) element, true);
                 } else {
                     builder.append(levelOneTab);
                     addValueElement(builder, element);
