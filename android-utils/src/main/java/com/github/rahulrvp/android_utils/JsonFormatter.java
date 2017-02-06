@@ -24,6 +24,7 @@ public class JsonFormatter {
     private String colorString;
     private String colorNumber;
     private String colorBoolean;
+    private String colorNull;
     private OutputFormat outputFormat;
 
     private JsonFormatter() {
@@ -34,6 +35,7 @@ public class JsonFormatter {
         colorString = "#53a06b";
         colorNumber = "#af83a8";
         colorBoolean = "#ddab1f";
+        colorNull = "#c0c3ca";
         outputFormat = OutputFormat.String;
     }
 
@@ -145,10 +147,25 @@ public class JsonFormatter {
     private void addValueElement(StringBuilder builder, Object element) {
         if (element instanceof String) {
             addQuotedElement(builder, element, colorString);
+        } else if ("null".equals(element.toString())) {
+            addNullElement(builder);
         } else if (element instanceof Boolean) {
             addNonQuotedElement(builder, element, colorBoolean);
         } else {
             addNonQuotedElement(builder, element, colorNumber);
+        }
+    }
+
+    private void addNullElement(StringBuilder builder) {
+        if (outputFormat != null && outputFormat == OutputFormat.Html) {
+            builder
+                    .append("<i>")
+                    .append(fontTagOpen(colorNull))
+                    .append("null")
+                    .append(fontTagClose())
+                    .append("</i>");
+        } else {
+            builder.append("null");
         }
     }
 
@@ -286,6 +303,12 @@ public class JsonFormatter {
 
         public Builder setValueColorBoolean(String colorHashCode) {
             formatter.colorBoolean = colorHashCode;
+
+            return this;
+        }
+
+        public Builder setValueColorNull(String colorHashCode) {
+            formatter.colorNull = colorHashCode;
 
             return this;
         }
