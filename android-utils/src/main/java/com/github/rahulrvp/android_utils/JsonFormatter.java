@@ -65,35 +65,37 @@ public class JsonFormatter {
 
             addNonQuotedElement(builder, "{", colorBraces);
 
-            Iterator<String> keys = jsonObject.keys();
-            while (keys.hasNext()) {
-                builder.append(getNewlineString());
+            if (jsonObject.length() > 0) {
+                Iterator<String> keys = jsonObject.keys();
+                while (keys.hasNext()) {
+                    builder.append(getNewlineString());
 
-                String key = keys.next();
-                Object value = jsonObject.get(key);
+                    String key = keys.next();
+                    Object value = jsonObject.get(key);
 
-                builder.append(levelOneTab);
+                    builder.append(levelOneTab);
 
-                addQuotedElement(builder, key, colorKey);
+                    addQuotedElement(builder, key, colorKey);
 
-                builder.append(" : ");
+                    builder.append(" : ");
 
-                if (value instanceof JSONArray) {
-                    formatJson(builder, level + 1, (JSONArray) value, false);
-                } else if (value instanceof JSONObject) {
-                    formatJson(builder, level + 1, (JSONObject) value, false);
-                } else {
-                    addValueElement(builder, value);
+                    if (value instanceof JSONArray) {
+                        formatJson(builder, level + 1, (JSONArray) value, false);
+                    } else if (value instanceof JSONObject) {
+                        formatJson(builder, level + 1, (JSONObject) value, false);
+                    } else {
+                        addValueElement(builder, value);
+                    }
+
+                    if (keys.hasNext()) {
+                        addNonQuotedElement(builder, ",", colorComma);
+                    }
                 }
 
-                if (keys.hasNext()) {
-                    addNonQuotedElement(builder, ",", colorComma);
-                }
+                builder
+                        .append(newLine)
+                        .append(levelZeroTab);
             }
-
-            builder
-                    .append(newLine)
-                    .append(levelZeroTab);
 
             addNonQuotedElement(builder, "}", colorBraces);
         }
@@ -112,27 +114,29 @@ public class JsonFormatter {
 
             addNonQuotedElement(builder, "[", colorSqBracket);
 
-            for (int i = 0; i < len; i++) {
-                builder.append(newLine);
+            if (len > 0) {
+                for (int i = 0; i < len; i++) {
+                    builder.append(newLine);
 
-                Object element = jsonArray.get(i);
-                if (element instanceof JSONArray) {
-                    formatJson(builder, level + 1, (JSONArray) element, true);
-                } else if (element instanceof JSONObject) {
-                    formatJson(builder, level + 1, (JSONObject) element, true);
-                } else {
-                    builder.append(levelOneTab);
-                    addValueElement(builder, element);
+                    Object element = jsonArray.get(i);
+                    if (element instanceof JSONArray) {
+                        formatJson(builder, level + 1, (JSONArray) element, true);
+                    } else if (element instanceof JSONObject) {
+                        formatJson(builder, level + 1, (JSONObject) element, true);
+                    } else {
+                        builder.append(levelOneTab);
+                        addValueElement(builder, element);
+                    }
+
+                    if (len - i != 1) {
+                        addNonQuotedElement(builder, ",", colorComma);
+                    }
                 }
 
-                if (len - i != 1) {
-                    addNonQuotedElement(builder, ",", colorComma);
-                }
+                builder
+                        .append(newLine)
+                        .append(levelZeroTab);
             }
-
-            builder
-                    .append(newLine)
-                    .append(levelZeroTab);
 
             addNonQuotedElement(builder, "]", colorSqBracket);
         }
