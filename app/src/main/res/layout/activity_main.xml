@@ -1,42 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="io.github.rahulrvp.androidutilslib.MainActivity">
 
+    <!--
+    TextView to apply sample font
+    -->
     <TextView
-        android:id="@+id/sample_textview"
+        android:id="@+id/font_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sample TextView"
-        android:textSize="18sp"
-        android:textStyle="italic" />
+        android:layout_marginTop="15dp"
+        android:text="@string/i_am_roboto_regular"
+        android:textSize="18sp" />
 
+    <!--
+    The below EditText has a phone number validator added. It will
+    do the validation once we loose the focus.
+    -->
     <EditText
-        android:id="@+id/edit_text"
+        android:id="@+id/phone_field_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/sample_textview" />
+        android:layout_marginTop="15dp"
+        android:hint="@string/mobile_validates_on_focus_change"
+        android:inputType="phone" />
 
-    <Button
-        android:id="@+id/test_code_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edit_text"
-        android:onClick="onTestClicked"
-        android:text="@string/test_code" />
-
-    <TextView
-        android:id="@+id/json_output_text"
+    <!--
+    The following block demonstrates the phone number validation
+    on button click.
+    -->
+    <EditText
+        android:id="@+id/phone_field_2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/test_code_btn"
-        android:layout_marginTop="10dp" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:hint="@string/mobile"
+        android:inputType="phone" />
 
-</RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/validate_phone_btn"
+            style="?attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onValidateGlobalNumberClick"
+            android:text="@string/validate_global_number" />
+
+        <Button
+            android:id="@+id/validate_indian_phone_btn"
+            style="?attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onValidateIndianNumberClick"
+            android:text="@string/validate_indian_number" />
+
+    </LinearLayout>
+
+</LinearLayout>
