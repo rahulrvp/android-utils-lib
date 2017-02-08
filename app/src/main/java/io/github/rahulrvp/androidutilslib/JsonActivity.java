@@ -30,7 +30,7 @@ public class JsonActivity extends AppCompatActivity {
                 String formatted =
                         new JsonFormatter
                                 .Builder()
-                                .setOutputFormat(JsonFormatter.OutputFormat.Html)
+                                .setOutputFormat(JsonFormatter.HTML)
                                 .build()
                                 .format(json);
 

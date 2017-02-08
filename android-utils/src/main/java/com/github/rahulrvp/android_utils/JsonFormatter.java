@@ -17,6 +17,9 @@ import java.util.Iterator;
 
 public class JsonFormatter {
 
+    public static final int STRING = 900;
+    public static final int HTML = 901;
+
     private String colorBraces;
     private String colorSqBracket;
     private String colorComma;
@@ -25,7 +28,7 @@ public class JsonFormatter {
     private String colorNumber;
     private String colorBoolean;
     private String colorNull;
-    private OutputFormat outputFormat;
+    private int outputFormat;
 
     private JsonFormatter() {
         colorBraces = "#729fcf";
@@ -36,7 +39,7 @@ public class JsonFormatter {
         colorNumber = "#af83a8";
         colorBoolean = "#ddab1f";
         colorNull = "#c0c3ca";
-        outputFormat = OutputFormat.String;
+        outputFormat = STRING;
     }
 
     public String format(String text) {
@@ -55,7 +58,31 @@ public class JsonFormatter {
         return stringBuilder.toString();
     }
 
-    public void formatJson(StringBuilder builder, int level, JSONObject jsonObject, boolean isArrayElement) throws JSONException {
+    public String format(JSONObject jsonObject) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        try {
+            formatJson(stringBuilder, 0, jsonObject, false);
+        } catch (JSONException e) {
+            Log.e("JsonFormatter", e.getMessage());
+        }
+
+        return stringBuilder.toString();
+    }
+
+    public String format(JSONArray jsonArray) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        try {
+            formatJson(stringBuilder, 0, jsonArray, false);
+        } catch (JSONException e) {
+            Log.e("JsonFormatter", e.getMessage());
+        }
+
+        return stringBuilder.toString();
+    }
+
+    private void formatJson(StringBuilder builder, int level, JSONObject jsonObject, boolean isArrayElement) throws JSONException {
         if (jsonObject != null && builder != null) {
             String levelZeroTab = tabs(level);
             String levelOneTab = tabs(level + 1);
@@ -103,7 +130,7 @@ public class JsonFormatter {
         }
     }
 
-    public void formatJson(StringBuilder builder, int level, JSONArray jsonArray, boolean isArrayElement) throws JSONException {
+    private void formatJson(StringBuilder builder, int level, JSONArray jsonArray, boolean isArrayElement) throws JSONException {
         if (jsonArray != null && builder != null) {
             int len = jsonArray.length();
             String levelZeroTab = tabs(level);
@@ -157,7 +184,7 @@ public class JsonFormatter {
     }
 
     private void addNullElement(StringBuilder builder) {
-        if (outputFormat != null && outputFormat == OutputFormat.Html) {
+        if (outputFormat == HTML) {
             builder
                     .append("<i>")
                     .append(fontTagOpen(colorNull))
@@ -170,7 +197,7 @@ public class JsonFormatter {
     }
 
     private void addQuotedElement(StringBuilder builder, Object value, String colorHash) {
-        if (outputFormat != null && outputFormat == OutputFormat.Html) {
+        if (outputFormat == HTML) {
             builder
                     .append(fontTagOpen(colorHash))
                     .append("\"")
@@ -186,7 +213,7 @@ public class JsonFormatter {
     }
 
     private void addNonQuotedElement(StringBuilder builder, Object value, String colorHash) {
-        if (outputFormat != null && outputFormat == OutputFormat.Html) {
+        if (outputFormat == HTML) {
             builder
                     .append(fontTagOpen(colorHash))
                     .append(value)
@@ -220,16 +247,15 @@ public class JsonFormatter {
     private String getTabString() {
         String tabString = "";
 
-        if (outputFormat != null) {
-            switch (outputFormat) {
-                case String:
-                    tabString = "\t";
-                    break;
+        switch (outputFormat) {
+            case HTML:
+                tabString = "&emsp;";
+                break;
 
-                case Html:
-                    tabString = "&emsp;";
-                    break;
-            }
+            case STRING:
+            default:
+                tabString = "\t";
+
         }
 
         return tabString;
@@ -238,24 +264,17 @@ public class JsonFormatter {
     private String getNewlineString() {
         String newlineString = "";
 
-        if (outputFormat != null) {
-            switch (outputFormat) {
-                case String:
-                    newlineString = "\n";
-                    break;
+        switch (outputFormat) {
+            case HTML:
+                newlineString = "<br>";
+                break;
 
-                case Html:
-                    newlineString = "<br>";
-                    break;
-            }
+            case STRING:
+            default:
+                newlineString = "\n";
         }
 
         return newlineString;
-    }
-
-    public enum OutputFormat {
-        String,
-        Html
     }
 
     public static class Builder {
@@ -313,7 +332,7 @@ public class JsonFormatter {
             return this;
         }
 
-        public Builder setOutputFormat(OutputFormat outputFormat) {
+        public Builder setOutputFormat(int outputFormat) {
             formatter.outputFormat = outputFormat;
 
             return this;
