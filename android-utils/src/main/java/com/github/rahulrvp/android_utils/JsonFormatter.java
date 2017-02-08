@@ -17,7 +17,9 @@ import java.util.Iterator;
 
 public class JsonFormatter {
 
+    @SuppressWarnings("WeakerAccess")
     public static final int STRING = 900;
+    @SuppressWarnings("WeakerAccess")
     public static final int HTML = 901;
 
     private String colorBraces;
@@ -42,16 +44,16 @@ public class JsonFormatter {
         outputFormat = STRING;
     }
 
-    public String format(String text) {
+    public String format(String jsonString) {
         StringBuilder stringBuilder = new StringBuilder();
 
         try {
-            formatJson(stringBuilder, 0, new JSONObject(text), false);
+            formatJson(stringBuilder, 0, new JSONObject(jsonString), false);
         } catch (Exception e) {
             try {
-                formatJson(stringBuilder, 0, new JSONArray(text), false);
+                formatJson(stringBuilder, 0, new JSONArray(jsonString), false);
             } catch (Exception err) {
-                Log.e("JsonFormatter", e.getMessage());
+                Log.e("JsonFormatter", "Input is not a valid JSON. Value: " + String.valueOf(jsonString));
             }
         }
 
@@ -245,7 +247,7 @@ public class JsonFormatter {
     }
 
     private String getTabString() {
-        String tabString = "";
+        String tabString;
 
         switch (outputFormat) {
             case HTML:
@@ -262,7 +264,7 @@ public class JsonFormatter {
     }
 
     private String getNewlineString() {
-        String newlineString = "";
+        String newlineString;
 
         switch (outputFormat) {
             case HTML:
