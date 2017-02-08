@@ -10,6 +10,12 @@ import org.json.JSONObject;
 import java.util.Iterator;
 
 /**
+ * This class helps you format a raw JSON input and give you a pretty formatted output in
+ * either String or HTML format. The HTML format supports color. User can customize the
+ * colors used with the help of {@link Builder} class.
+ * <p>
+ * The class supports inputs as String, JSONObject and JSONArray.
+ *
  * @author Rahul Raveendran V P
  *         Created on 23/1/17 @ 5:27 PM
  *         https://github.com/rahulrvp
@@ -44,6 +50,12 @@ public class JsonFormatter {
         outputFormat = STRING;
     }
 
+    /**
+     * Formats the raw JSON string input. The output will be either in String or HTML format.
+     *
+     * @param jsonString input JSON String
+     * @return if input is valid, returns formatted output JSON either in String or HTML format; else empty string.
+     */
     public String format(String jsonString) {
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -60,6 +72,12 @@ public class JsonFormatter {
         return stringBuilder.toString();
     }
 
+    /**
+     * Formats the JSONObject instance input. The output will be either in String or HTML format.
+     *
+     * @param jsonObject input JSONObject instance.
+     * @return if input is valid, returns formatted output JSON either in String or HTML format; else empty string.
+     */
     public String format(JSONObject jsonObject) {
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -72,6 +90,12 @@ public class JsonFormatter {
         return stringBuilder.toString();
     }
 
+    /**
+     * Formats the JSONArray instance input. The output will be either in String or HTML format.
+     *
+     * @param jsonArray input JSONArray instance.
+     * @return if input is valid, returns formatted output JSON either in String or HTML format; else empty string.
+     */
     public String format(JSONArray jsonArray) {
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -279,6 +303,10 @@ public class JsonFormatter {
         return newlineString;
     }
 
+    /**
+     * This Builder class is responsible for creating {@link JsonFormatter} instance with
+     * a set of customizations including colors.
+     */
     public static class Builder {
         final JsonFormatter formatter;
 
