@@ -1,5 +1,6 @@
 package com.github.rahulrvp.android_utils;
 
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -314,49 +315,49 @@ public class JsonFormatter {
             formatter = new JsonFormatter();
         }
 
-        public Builder setObjectBracketColor(String colorHashCode) {
+        public Builder setObjectBracketColor(@NonNull String colorHashCode) {
             formatter.colorBraces = colorHashCode;
 
             return this;
         }
 
-        public Builder setArrayBracketColor(String colorHashCode) {
+        public Builder setArrayBracketColor(@NonNull String colorHashCode) {
             formatter.colorSqBracket = colorHashCode;
 
             return this;
         }
 
-        public Builder setCommaColor(String colorHashCode) {
+        public Builder setCommaColor(@NonNull String colorHashCode) {
             formatter.colorComma = colorHashCode;
 
             return this;
         }
 
-        public Builder setKeyColor(String colorHashCode) {
+        public Builder setKeyColor(@NonNull String colorHashCode) {
             formatter.colorKey = colorHashCode;
 
             return this;
         }
 
-        public Builder setValueColorString(String colorHashCode) {
+        public Builder setValueColorString(@NonNull String colorHashCode) {
             formatter.colorString = colorHashCode;
 
             return this;
         }
 
-        public Builder setValueColorNumber(String colorHashCode) {
+        public Builder setValueColorNumber(@NonNull String colorHashCode) {
             formatter.colorNumber = colorHashCode;
 
             return this;
         }
 
-        public Builder setValueColorBoolean(String colorHashCode) {
+        public Builder setValueColorBoolean(@NonNull String colorHashCode) {
             formatter.colorBoolean = colorHashCode;
 
             return this;
         }
 
-        public Builder setValueColorNull(String colorHashCode) {
+        public Builder setValueColorNull(@NonNull String colorHashCode) {
             formatter.colorNull = colorHashCode;
 
             return this;
