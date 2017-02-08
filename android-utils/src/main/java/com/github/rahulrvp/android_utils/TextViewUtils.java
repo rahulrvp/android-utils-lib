@@ -89,6 +89,18 @@ public class TextViewUtils {
     }
 
     /**
+     * Sets charSequence in given {@link TextView}
+     *
+     * @param textView     Valid {@link TextView} object
+     * @param charSequence Text to be shown in the given {@link TextView}
+     */
+    public static void setText(TextView textView, CharSequence charSequence) {
+        if (textView != null) {
+            textView.setText(charSequence);
+        }
+    }
+
+    /**
      * Sets error text in given {@link TextView}
      *
      * @param textView Valid {@link TextView} object

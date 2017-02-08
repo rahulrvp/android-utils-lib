@@ -1,37 +1,50 @@
 package io.github.rahulrvp.androidutilslib;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.rahulrvp.android_utils.DateTimeUtils;
 import com.github.rahulrvp.android_utils.EditTextUtils;
-import com.github.rahulrvp.android_utils.TextViewUtils;
 import com.github.rahulrvp.android_utils.ValidationUtils;
 
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText mEditText;
+    private EditText phoneInputField2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView textView = (TextView) findViewById(R.id.sample_textview);
-        String text = TextViewUtils.getText(textView);
-        TextViewUtils.setError(textView, "New text! " + text);
+        /**
+         * Applying custom font.
+         */
+        TextView textView = (TextView) findViewById(R.id.font_text_view);
+        new RobotoRegular().apply(textView, Typeface.ITALIC);
 
-        new RobotoRegular().apply(textView);
+        /**
+         * Adding automatic phone number validator. The validation takes place
+         * when we leave the edit text. (on focus change)
+         */
+        EditText phoneInputField1 = (EditText) findViewById(R.id.phone_field_1);
+        ValidationUtils.addPhoneNumberValidator(phoneInputField1);
 
-        mEditText = (EditText) findViewById(R.id.edit_text);
-        ValidationUtils.addPhoneNumberValidator(mEditText);
+        /**
+         * EditText for taking phone number for validating later.
+         */
+        phoneInputField2 = (EditText) findViewById(R.id.phone_field_2);
 
+        /**
+         * Time ago string demo.
+         */
         Calendar now = Calendar.getInstance();
         now.set(2012, 0, 1);
 
@@ -43,10 +56,23 @@ public class MainActivity extends AppCompatActivity {
         Log.d("LOG", DateTimeUtils.getTimeAgoString(yesterday.getTimeInMillis(), null, false));
     }
 
-    public void onTestClicked(View view) {
-        String phoneNumber = EditTextUtils.getText(mEditText);
-        boolean status = ValidationUtils.isGlobalPhoneNumber(phoneNumber);
+    public void onValidateGlobalNumberClick(View view) {
+        String phoneNumber = EditTextUtils.getText(phoneInputField2);
+        boolean isGlobal = ValidationUtils.isGlobalPhoneNumber(phoneNumber);
+        if (!isGlobal) {
+            EditTextUtils.setError(phoneInputField2, "Not a valid global phone number.");
+        } else {
+            Toast.makeText(this, "Valid Global Phone Number.", Toast.LENGTH_SHORT).show();
+        }
+    }
 
-        Log.d("Sample App", phoneNumber + " " + status);
+    public void onValidateIndianNumberClick(View view) {
+        String phoneNumber = EditTextUtils.getText(phoneInputField2);
+        boolean isGlobal = ValidationUtils.isIndianPhoneNumber(phoneNumber);
+        if (!isGlobal) {
+            EditTextUtils.setError(phoneInputField2, "Not a valid Indian phone number.");
+        } else {
+            Toast.makeText(this, "Valid Indian Phone Number.", Toast.LENGTH_SHORT).show();
+        }
     }
 }
