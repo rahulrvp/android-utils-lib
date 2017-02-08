@@ -5,4 +5,5 @@
     <string name="i_am_roboto_regular">I am Roboto Regular (Italic)</string>
     <string name="mobile">mobile</string>
     <string name="mobile_validates_on_focus_change">mobile (Formats on focus change)</string>
+    <string name="json_formatter_demo">JSON Formatter Demo</string>
 </resources>

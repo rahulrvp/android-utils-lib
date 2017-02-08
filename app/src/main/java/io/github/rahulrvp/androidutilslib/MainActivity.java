@@ -1,9 +1,12 @@
 package io.github.rahulrvp.androidutilslib;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -74,5 +77,21 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Valid Indian Phone Number.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.demo_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.json_formatter_demo) {
+            startActivity(new Intent(this, JsonActivity.class));
+        }
+
+        return true;
     }
 }
