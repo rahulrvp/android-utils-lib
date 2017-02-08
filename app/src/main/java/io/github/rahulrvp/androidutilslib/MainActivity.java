@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.rahulrvp.android_utils.DateTimeUtils;
 import com.github.rahulrvp.android_utils.EditTextUtils;
@@ -60,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
         boolean isGlobal = ValidationUtils.isGlobalPhoneNumber(phoneNumber);
         if (!isGlobal) {
             EditTextUtils.setError(phoneInputField2, "Not a valid global phone number.");
+        } else {
+            Toast.makeText(this, "Valid Global Phone Number.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -68,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
         boolean isGlobal = ValidationUtils.isIndianPhoneNumber(phoneNumber);
         if (!isGlobal) {
             EditTextUtils.setError(phoneInputField2, "Not a valid Indian phone number.");
+        } else {
+            Toast.makeText(this, "Valid Indian Phone Number.", Toast.LENGTH_SHORT).show();
         }
     }
 }
