@@ -17,3 +17,7 @@ For Javadocs visit: http://www.javadoc.io/doc/com.github.rahulrvp/android-utils
 ## Contributions
 
 If you have a util class that helps you speed up your app development? Would you like to share it with the rest of the world? Feel free to raise a PR.
+
+## Donate
+
+Like the library? Please consider buying me a coffee :) https://www.paypal.me/rahulrvp
