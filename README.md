@@ -1,10 +1,12 @@
 # Android Utils
 
-A collection of utility classes to help reduce the code duplication and give access to commonly used methods.
+First of all, thanks a bunch for all the [downloads](https://bintray.com/rahulrvp/android/android-utils#statistics)! I am really humbled to see this tiny project is helping people to save their development time! :slightly_smiling_face:
+
+Aboubt the library: This is a collection of utility classes to help reduce the code duplication and give access to commonly used methods.
 
 ## Gradle
 
-```java
+```gradle
 dependencies {
     implementation 'com.github.rahulrvp:android-utils:0.4.0'
 }
@@ -12,7 +14,7 @@ dependencies {
 
 ## Docs
 
-For Javadocs visit: http://www.javadoc.io/doc/com.github.rahulrvp/android-utils
+For Javadocs visit [here](http://www.javadoc.io/doc/com.github.rahulrvp/android-utils)
 
 ## Contributions
 
@@ -20,4 +22,4 @@ If you have a util class that helps you speed up your app development? Would you
 
 ## Donate
 
-Like the library? Please consider buying me a coffee :) https://www.paypal.me/rahulrvp
+Please consider buying me a :coffee: with [paypal](https://www.paypal.me/rahulrvp) if (only if) you really like this library
